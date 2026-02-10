@@ -21,7 +21,8 @@ const LoginPage = () => {
             });
 
             if (response.token) {
-                login(response.customer, response.token);
+                const { token, ...userData } = response;
+                login(userData, token);
                 toast.success('Welcome to Avira Vastra!');
                 navigate('/');
             }

@@ -24,13 +24,16 @@ class APIClient {
     async request(endpoint, options = {}) {
         const url = `${this.baseURL}${endpoint}`;
 
-        // Get token from auth storage (managed by Zustand persist) or admin storage
+        // Get token based on endpoint context
         let token = null;
         try {
-            const adminToken = localStorage.getItem('adminToken');
-            if (adminToken) {
-                token = adminToken;
-            } else {
+            // Priority 1: Admin token for admin routes
+            if (endpoint.startsWith('/admin')) {
+                token = localStorage.getItem('adminToken');
+            }
+
+            // Priority 2: Customer token for everything else (or fallback)
+            if (!token) {
                 const authStorage = localStorage.getItem('auth-storage');
                 if (authStorage) {
                     const parsed = JSON.parse(authStorage);

@@ -24,15 +24,18 @@ class APIClient {
     async request(endpoint, options = {}) {
         const url = `${this.baseURL}${endpoint}`;
 
-        // Get token based on endpoint context
+        // Get token based on context (Path or Endpoint)
         let token = null;
         try {
-            // Priority 1: Admin token for admin routes
-            if (endpoint.startsWith('/admin')) {
+            const isAdminPath = window.location.pathname.startsWith('/admin');
+            const isAdminService = endpoint.startsWith('/admin') || endpoint.startsWith('/upload');
+
+            // Priority 1: Admin token for Admin panel or Admin-only services
+            if (isAdminPath || isAdminService) {
                 token = localStorage.getItem('adminToken');
             }
 
-            // Priority 2: Customer token for everything else (or fallback)
+            // Priority 2: Customer token for general store use
             if (!token) {
                 const authStorage = localStorage.getItem('auth-storage');
                 if (authStorage) {

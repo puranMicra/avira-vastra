@@ -76,7 +76,6 @@ function App() {
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
       <Router>
         <div className="app">
-          <Preloader />
           <ScrollToTop />
 
           <Routes>

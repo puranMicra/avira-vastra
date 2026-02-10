@@ -66,8 +66,6 @@
    ============================================ */
 
 .product-card {
-    display: flex;
-    flex-direction: column;
     text-decoration: none;
     transition: opacity var(--transition-fast);
 }
@@ -101,12 +99,6 @@
    PRODUCT INFO
    ============================================ */
 
-.product-card__info {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
-
 .product-card__urgency {
     font-family: var(--font-sans);
     font-size: var(--fs-xs);
@@ -114,23 +106,6 @@
     color: var(--text-muted);
     text-transform: capitalize;
     margin: 0 0 var(--space-xs);
-}
-
-.product-card__name {
-    font-family: var(--font-sans);
-    font-size: var(--fs-small);
-    font-weight: var(--fw-medium);
-    color: var(--text-primary);
-    line-height: var(--lh-snug);
-    margin: 0;
-}
-
-.product-card__price {
-    font-family: var(--font-sans);
-    font-size: var(--fs-body);
-    font-weight: var(--fw-semibold);
-    color: var(--text-primary);
-    margin: var(--space-xs) 0;
 }
 
 .product-card__trust {
@@ -143,7 +118,6 @@
 }
 
 .product-card__add-btn {
-    margin-top: 1rem;
     padding: 0.75rem;
     background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold-dark) 100%);
     color: #ffffff;

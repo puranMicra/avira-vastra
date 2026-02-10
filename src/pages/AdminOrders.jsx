@@ -7,6 +7,9 @@ const AdminOrders = () => {
     const [loading, setLoading] = useState(true);
     const [filter, setFilter] = useState('ALL');
 
+    const [selectedOrder, setSelectedOrder] = useState(null);
+    const [showModal, setShowModal] = useState(false);
+
     useEffect(() => {
         fetchOrders();
     }, []);
@@ -30,6 +33,11 @@ const AdminOrders = () => {
         } catch (err) {
             toast.error('Failed to update status');
         }
+    };
+
+    const openDetails = (order) => {
+        setSelectedOrder(order);
+        setShowModal(true);
     };
 
     const filteredOrders = orders.filter(o =>
@@ -77,7 +85,7 @@ const AdminOrders = () => {
                         <tbody>
                             {filteredOrders.map((order) => (
                                 <tr key={order._id}>
-                                    <td style={{ fontWeight: '700' }}>#{order.orderId.split('-')[1]}</td>
+                                    <td style={{ fontWeight: '700' }}>#{order.orderId?.split('-')?.[1] || 'N/A'}</td>
                                     <td>{new Date(order.createdAt).toLocaleDateString()}</td>
                                     <td>
                                         <div style={{ fontWeight: '500' }}>{order.customerName}</div>
@@ -105,7 +113,11 @@ const AdminOrders = () => {
                                         </select>
                                     </td>
                                     <td>
-                                        <button className="admin-btn admin-btn--outline" style={{ fontSize: '0.75rem', padding: '0.4rem 0.8rem' }}>
+                                        <button
+                                            className="admin-btn admin-btn--outline"
+                                            style={{ fontSize: '0.75rem', padding: '0.4rem 0.8rem' }}
+                                            onClick={() => openDetails(order)}
+                                        >
                                             Details
                                         </button>
                                     </td>
@@ -115,6 +127,86 @@ const AdminOrders = () => {
                     </table>
                 </div>
             </div>
+
+            {/* Quick View Modal */}
+            {showModal && selectedOrder && (
+                <div className="admin-modal-overlay" onClick={() => setShowModal(false)}>
+                    <div className="admin-modal" onClick={e => e.stopPropagation()}>
+                        <div className="admin-modal__header">
+                            <h3 className="admin-modal__title">Order Details #{selectedOrder.orderId?.split('-')?.[1]}</h3>
+                            <button className="admin-modal__close" onClick={() => setShowModal(false)}>✕</button>
+                        </div>
+                        <div className="admin-modal__body">
+                            <div className="order-detail-grid">
+                                <div className="order-detail-section">
+                                    <h4>Customer Information</h4>
+                                    <div className="data-pair">
+                                        <label>Name</label>
+                                        <p>{selectedOrder.customerName}</p>
+                                    </div>
+                                    <div className="data-pair">
+                                        <label>Phone</label>
+                                        <p>{selectedOrder.phone}</p>
+                                    </div>
+                                    <div className="data-pair">
+                                        <label>Email</label>
+                                        <p>{selectedOrder.email}</p>
+                                    </div>
+                                </div>
+                                <div className="order-detail-section">
+                                    <h4>Shipping Address</h4>
+                                    <p style={{ fontSize: '0.9rem', lineHeight: '1.6' }}>
+                                        {selectedOrder.address}<br />
+                                        {selectedOrder.city}, {selectedOrder.state} - {selectedOrder.pincode}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div className="order-detail-section">
+                                <h4>Order Items</h4>
+                                <div className="order-items-list">
+                                    {selectedOrder.items.map((item, idx) => (
+                                        <div key={idx} className="order-item-row">
+                                            <img
+                                                src={item.product?.images?.[0] || 'https://via.placeholder.com/60x80'}
+                                                alt=""
+                                                className="order-item-img"
+                                            />
+                                            <div className="order-item-info">
+                                                <p style={{ fontWeight: '600' }}>{item.name}</p>
+                                                <span>Quantity: {item.quantity}</span>
+                                            </div>
+                                            <p style={{ fontWeight: '700', textAlign: 'right' }}>
+                                                ₹{(item.price * item.quantity).toLocaleString('en-IN')}
+                                            </p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div className="order-detail-section" style={{ borderTop: '1px solid #eee', paddingTop: '1.5rem' }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <div className="data-pair">
+                                        <label>Payment Method</label>
+                                        <p>{selectedOrder.paymentMethod}</p>
+                                    </div>
+                                    <div style={{ textAlign: 'right' }}>
+                                        <label style={{ fontSize: '0.7rem', color: '#666', textTransform: 'uppercase' }}>Grand Total</label>
+                                        <p style={{ fontSize: '1.5rem', fontWeight: '800', color: 'var(--admin-accent)' }}>
+                                            ₹{selectedOrder.totalAmount.toLocaleString('en-IN')}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="admin-modal__footer">
+                            <button className="admin-btn admin-btn--outline" onClick={() => setShowModal(false)}>
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

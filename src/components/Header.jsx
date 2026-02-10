@@ -22,14 +22,7 @@ const Header = ({ onMenuOpen, isScrolled }) => {
 
     return (
         <header className={headerClass}>
-            {/* Top Bar - Premium Global Announcement - HOME PAGE ONLY */}
-            {isHomePage && content?.showBanner !== false && (
-                <div className="header__topbar">
-                    <span className="header__tagline">
-                        {content?.bannerText || 'The Heritage Collection: Now Shipping Globally'}
-                    </span>
-                </div>
-            )}
+
 
             {/* Main Header Row */}
             <div className="header__main">

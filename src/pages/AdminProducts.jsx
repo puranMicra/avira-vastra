@@ -54,6 +54,7 @@ const AdminProducts = () => {
             ...product,
             price: product.price.toString(),
             discountedPrice: product.discountedPrice?.toString() || '',
+            stock: Math.max(0, product.stock).toString(),
             category: product.category?._id || product.category // Handle populated vs ID
         });
         setShowForm(true);
@@ -74,12 +75,12 @@ const AdminProducts = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Prepare data with correct types
+        // Prepare data with correct types and ensure non-negative
         const submissionData = {
             ...formData,
-            price: Number(formData.price),
-            discountedPrice: formData.discountedPrice ? Number(formData.discountedPrice) : undefined,
-            stock: Number(formData.stock)
+            price: Math.max(0, Number(formData.price)),
+            discountedPrice: formData.discountedPrice ? Math.max(0, Number(formData.discountedPrice)) : undefined,
+            stock: Math.max(0, Number(formData.stock))
         };
 
         try {
@@ -190,6 +191,7 @@ const AdminProducts = () => {
                                 <label>Base Price (₹)</label>
                                 <input
                                     type="number"
+                                    min="0"
                                     value={formData.price}
                                     onChange={(e) => setFormData({ ...formData, price: e.target.value })}
                                     required
@@ -199,6 +201,7 @@ const AdminProducts = () => {
                                 <label>Discounted Price (optional)</label>
                                 <input
                                     type="number"
+                                    min="0"
                                     value={formData.discountedPrice}
                                     onChange={(e) => setFormData({ ...formData, discountedPrice: e.target.value })}
                                 />
@@ -207,6 +210,7 @@ const AdminProducts = () => {
                                 <label>Stock Quantity</label>
                                 <input
                                     type="number"
+                                    min="0"
                                     value={formData.stock}
                                     onChange={(e) => setFormData({ ...formData, stock: e.target.value })}
                                     required

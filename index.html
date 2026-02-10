@@ -2,7 +2,11 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
+    
+    <!-- CRITICAL: iOS Safari Viewport Fix - MUST load before first paint -->
+    <!-- This blocking script prevents white gaps and layout flash on real iPhone Safari -->
+    <script src="/viewport-init.js"></script>
     
     <!-- Primary Meta Tags -->
     <title>Avira | Premium Heritage E-Commerce</title>

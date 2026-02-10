@@ -2,31 +2,27 @@
     position: fixed;
     inset: 0;
     width: 100%;
-    
-    /* iOS Safari Fix: Multiple fallback strategies for full viewport height */
-    /* 1. Modern viewport units (Safari 15.4+) */
-    height: 100dvh; /* Dynamic viewport height - adjusts with browser chrome */
-    
-    /* 2. Fallback for older iOS */
-    height: -webkit-fill-available;
-    
-    /* 3. JavaScript-calculated height (most reliable for iOS) */
-    height: calc(var(--vh, 1vh) * 100);
-    
-    /* Ensure it covers the entire viewport */
-    min-height: 100vh;
-    min-height: 100dvh;
-    min-height: -webkit-fill-available;
-    
+
+    /* iOS Safari Fix: Use ONLY JavaScript-calculated height */
+    /* CSS-only solutions (100vh, dvh, -webkit-fill-available) are unreliable on real iOS Safari */
+    /* The blocking script in index.html sets --vh before first paint */
+    height: var(--real-vh, 100vh);
+    /* Fallback to 100vh only if JS fails */
+    min-height: var(--real-vh, 100vh);
+
     background-color: var(--bg-main);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 10000;
     transition: transform 0.8s cubic-bezier(0.85, 0, 0.15, 1), opacity 0.8s ease;
-    
+
     /* Prevent any scrolling while preloader is visible */
     overflow: hidden;
+
+    /* iOS Safari: Ensure it covers safe areas (notch, home indicator) */
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
 }
 
 .preloader--exit {

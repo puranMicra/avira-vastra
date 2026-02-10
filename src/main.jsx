@@ -9,9 +9,8 @@ import { createRoot } from 'react-dom/client';
 // Global styles (includes variables.css via import)
 import './styles/global.css';
 
-// iOS Safari viewport fix - must run before app renders
-import { initViewportFix } from './utils/viewportFix';
-initViewportFix();
+// Note: iOS Safari viewport fix is now handled by blocking script in index.html
+// This ensures viewport height is set BEFORE first paint to prevent layout flash
 
 import App from './App.jsx';
 

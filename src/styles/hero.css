@@ -12,21 +12,17 @@
     position: relative;
     width: 100%;
 
-    /* iOS Safari Fix: Use dynamic viewport height instead of 100vh */
-    /* Cascade from modern to legacy fallbacks */
-    height: 100dvh;
-    /* Dynamic viewport height (Safari 15.4+) */
-    height: -webkit-fill-available;
-    /* iOS Safari 13-15 */
-    height: calc(var(--vh, 1vh) * 100);
-    /* JavaScript fallback (most reliable) */
-
-    min-height: 100vh;
-    min-height: 100dvh;
-    min-height: -webkit-fill-available;
+    /* iOS Safari Fix: Use ONLY JavaScript-calculated height */
+    /* Blocking script in index.html sets --real-vh before first paint */
+    height: var(--real-vh, 100vh);
+    min-height: var(--real-vh, 100vh);
 
     overflow: hidden;
     background-color: var(--text-primary);
+
+    /* iOS Safari: Cover safe areas */
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
 }
 
 /* ============================================
@@ -46,41 +42,47 @@
     object-fit: cover;
     pointer-events: none;
 
-    /* iOS Safari Fix: Hide video play button overlay */
-    /* This prevents the play icon from flashing during reload */
-
-    /* Hide all native controls */
-    -webkit-media-controls: none;
-    -webkit-media-controls-panel: none;
-    -webkit-media-controls-play-button: none;
-    -webkit-media-controls-start-playback-button: none;
-
-    /* Remove the play button overlay specifically */
-    &::-webkit-media-controls {
-        display: none !important;
-        opacity: 0 !important;
-        visibility: hidden !important;
-    }
-
-    &::-webkit-media-controls-panel {
-        display: none !important;
-    }
-
-    &::-webkit-media-controls-play-button {
-        display: none !important;
-    }
-
-    &::-webkit-media-controls-start-playback-button {
-        display: none !important;
-    }
-
-    &::-webkit-media-controls-overlay-play-button {
-        display: none !important;
-        opacity: 0 !important;
-    }
+    /* iOS Safari Fix: Aggressively hide ALL video controls */
+    /* This prevents the play icon from flashing during reload on real iPhone */
 
     /* Ensure video is always in background */
     z-index: -1;
+}
+
+/* iOS Safari: Hide ALL WebKit media controls */
+.hero__video::-webkit-media-controls {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    -webkit-appearance: none !important;
+}
+
+.hero__video::-webkit-media-controls-enclosure {
+    display: none !important;
+}
+
+.hero__video::-webkit-media-controls-panel {
+    display: none !important;
+}
+
+.hero__video::-webkit-media-controls-play-button {
+    display: none !important;
+}
+
+.hero__video::-webkit-media-controls-start-playback-button {
+    display: none !important;
+}
+
+/* CRITICAL: This is the play button overlay that flashes on iOS */
+.hero__video::-webkit-media-controls-overlay-play-button {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+.hero__video::-webkit-media-controls-overlay-enclosure {
+    display: none !important;
 }
 
 /* ============================================

@@ -92,20 +92,27 @@ const CartPage = () => {
                                     <p className="cart-item__category">{item.category?.name || 'Saree'}</p>
 
                                     <div className="cart-item__actions">
-                                        <div className="quantity-controls">
+                                        <div className="premium-qty">
                                             <button
                                                 onClick={() => handleUpdateQuantity(item._id, item.quantity - 1)}
-                                                className="quantity-btn"
+                                                className="qty-trigger"
                                                 disabled={item.quantity <= 1}
+                                                aria-label="Decrease quantity"
                                             >
-                                                -
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                                </svg>
                                             </button>
-                                            <span className="quantity-value">{item.quantity}</span>
+                                            <span className="qty-display">{item.quantity}</span>
                                             <button
                                                 onClick={() => handleUpdateQuantity(item._id, item.quantity + 1)}
-                                                className="quantity-btn"
+                                                className="qty-trigger"
+                                                aria-label="Increase quantity"
                                             >
-                                                +
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                                                    <line x1="12" y1="5" x2="12" y2="19" />
+                                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                                </svg>
                                             </button>
                                         </div>
 

@@ -66,11 +66,12 @@ const HeritageWeaves = () => {
                 {/* Weaves Cards */}
                 {!loading && !error && displayCollections.length > 0 && (
                     <div className="heritage-weaves__grid">
-                        {displayCollections.map((weave) => (
+                        {displayCollections.map((weave, index) => (
                             <Link
                                 key={weave.id}
                                 to={weave.link}
-                                className={`weave-card ${weave.overlayLight ? 'weave-card--light-overlay' : ''}`}
+                                className={`weave-card heritage-weaves__item ${weave.overlayLight ? 'weave-card--light-overlay' : ''}`}
+                                style={{ animationDelay: `${index * 0.15}s` }}
                             >
                                 {/* Image */}
                                 <div className="weave-card__image-wrapper">

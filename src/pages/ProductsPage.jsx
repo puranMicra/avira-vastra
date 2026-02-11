@@ -3,21 +3,17 @@
  * Refined Collection with Professional Search and URL-based Filtering
  */
 
-import { useState, useEffect, useCallback } from 'react';
-import { useSearchParams, Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { useProducts } from '../hooks/useProducts';
-import useCartStore from '../store/cartStore';
-import toast from 'react-hot-toast';
+import ProductCard from '../components/ProductCard';
 import '../styles/products.css';
 
 const ProductsPage = () => {
     const [searchParams, setSearchParams] = useSearchParams();
-    const addItem = useCartStore((state) => state.addItem);
 
     // Get filters from URL
     const initialSearch = searchParams.get('search') || '';
-    const initialOccasion = searchParams.get('occasion') || '';
-    const initialCollection = searchParams.get('collection') || '';
 
     const [searchTerm, setSearchTerm] = useState(initialSearch);
 
@@ -69,12 +65,6 @@ const ProductsPage = () => {
     useEffect(() => {
         refetch();
     }, [searchParams, refetch]);
-
-    const handleAddToCart = (e, product) => {
-        e.preventDefault();
-        addItem(product);
-        toast.success(`${product.name} added to bag!`);
-    };
 
     const clearAll = () => {
         setSearchTerm('');
@@ -132,47 +122,14 @@ const ProductsPage = () => {
                         </div>
                     ) : (
                         <div className="products-grid">
-                            {products.map((product) => (
-                                <Link
+                            {products.map((product, index) => (
+                                <div
                                     key={product._id}
-                                    to={`/product/${product._id}`}
-                                    className="product-card"
+                                    className="products-grid__item"
+                                    style={{ animationDelay: `${(index % 8) * 0.1}s` }}
                                 >
-                                    <div className="product-card__image-wrapper">
-                                        <img
-                                            src={product.images?.[0] || 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400&q=80'}
-                                            alt={product.name}
-                                            className="product-card__image"
-                                            loading="lazy"
-                                        />
-                                        {product.discountedPrice && (
-                                            <span className="product-card__badge">Exclusive</span>
-                                        )}
-                                    </div>
-
-                                    <div className="product-card__info">
-                                        <p className="product-card__urgency">
-                                            Handcrafted Heritage
-                                        </p>
-                                        <h3 className="product-card__name">{product.name}</h3>
-                                        <div className="product-card__pricing">
-                                            <p className="product-card__price">
-                                                ₹{(product.discountedPrice || product.price).toLocaleString('en-IN')}
-                                            </p>
-                                            {product.discountedPrice && (
-                                                <p className="product-card__original-price">
-                                                    ₹{product.price.toLocaleString('en-IN')}
-                                                </p>
-                                            )}
-                                        </div>
-                                        <button
-                                            className="product-card__add-btn"
-                                            onClick={(e) => handleAddToCart(e, product)}
-                                        >
-                                            Add to Bag
-                                        </button>
-                                    </div>
-                                </Link>
+                                    <ProductCard product={product} />
+                                </div>
                             ))}
                         </div>
                     )}
@@ -181,5 +138,6 @@ const ProductsPage = () => {
         </main>
     );
 };
+
 
 export default ProductsPage;

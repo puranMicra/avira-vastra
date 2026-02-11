@@ -1,0 +1,173 @@
+/* ============================================
+   AVIRA LUXURY BOUTIQUE CARD - STUDIO EDITION
+   ============================================ */
+
+.avira-boutique-card {
+    position: relative;
+    background: transparent;
+    transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    height: 100%;
+}
+
+.abc-link {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    height: 100%;
+}
+
+/* 1. Image Container */
+.abc-image-box {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    background-color: #f7f3ef;
+    margin-bottom: 1.5rem;
+}
+
+.abc-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 2s cubic-bezier(0.2, 1, 0.2, 1);
+}
+
+.avira-boutique-card:hover .abc-image {
+    transform: scale(1.04);
+}
+
+/* 2. Minimalist Badges */
+.abc-badge {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #3d2b1f;
+    color: white;
+    padding: 0.5rem 0.8rem;
+    font-family: var(--font-sans);
+    font-size: 0.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    z-index: 2;
+}
+
+/* 3. Details - Centered & Refined */
+.abc-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Centered for Luxury Icon look */
+    text-align: center;
+    padding: 0 0.5rem;
+    flex-grow: 1;
+}
+
+.abc-label {
+    font-family: var(--font-sans);
+    font-size: 0.6rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: #a69485;
+    margin-bottom: 0.75rem;
+}
+
+.abc-name {
+    font-family: var(--font-serif);
+    font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+    font-weight: 400;
+    line-height: 1.4;
+    color: #3d2b1f;
+    margin: 0 0 1rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 3.6rem;
+    /* Ensures grid stability */
+}
+
+/* 4. Price Wrap */
+.abc-price-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.abc-price-current {
+    font-family: var(--font-serif);
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #3d2b1f;
+}
+
+.abc-price-old {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    text-decoration: line-through;
+    color: #bfb4aa;
+    opacity: 0.8;
+}
+
+/* 5. The "Professional" Button */
+.abc-add-btn {
+    width: 100%;
+    max-width: 200px;
+    padding: 0.75rem 0;
+    background: transparent;
+    border: 1px solid #3d2b1f;
+    color: #3d2b1f;
+    font-family: var(--font-sans);
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.2, 1, 0.3, 1);
+    opacity: 0;
+    transform: translateY(10px);
+}
+
+.avira-boutique-card:hover .abc-add-btn {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.abc-add-btn:hover {
+    background: #3d2b1f;
+    color: white;
+}
+
+/* 6. Mobile Adjustments */
+@media (max-width: 768px) {
+    .abc-image-box {
+        margin-bottom: 1rem;
+    }
+
+    .abc-add-btn {
+        opacity: 1;
+        /* Always show on mobile since no hover */
+        transform: none;
+        max-width: 100%;
+        font-size: 0.65rem;
+        padding: 0.8rem 0;
+        margin-top: auto;
+        /* Push to bottom of card */
+    }
+
+    .abc-name {
+        font-size: 1rem;
+        min-height: 2.8rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .abc-price-current {
+        font-size: 1.1rem;
+    }
+}

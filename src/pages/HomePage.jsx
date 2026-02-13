@@ -12,18 +12,36 @@ import BrandStory from '../components/BrandStory';
 import BrandPromise from '../components/BrandPromise';
 import WhatsAppHelp from '../components/WhatsAppHelp';
 import WhySurat from '../components/WhySurat';
+import { useScrollReveal } from '../hooks/useScrollReveal';
+
 const HomePage = () => {
+    useScrollReveal();
+
     return (
         <main>
             <Hero />
-            <NewArrivals />
-            <ShopByOccasion />
-            <HeritageWeaves />
-            <TrustStrip />
-            <BrandStory />
-            <BrandPromise />
+            <div className="reveal reveal--up">
+                <NewArrivals />
+            </div>
+            <div className="reveal reveal--up">
+                <ShopByOccasion />
+            </div>
+            <div className="reveal reveal--up">
+                <HeritageWeaves />
+            </div>
+            <div className="reveal reveal--up">
+                <TrustStrip />
+            </div>
+            <div className="reveal reveal--up">
+                <BrandStory />
+            </div>
+            <div className="reveal reveal--up">
+                <BrandPromise />
+            </div>
             <WhatsAppHelp />
-            <WhySurat />
+            <div className="reveal reveal--up">
+                <WhySurat />
+            </div>
         </main>
     );
 };

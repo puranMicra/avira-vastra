@@ -36,7 +36,9 @@ const ShopByOccasion = () => {
 
                 {/* Section Header */}
                 <div className="shop-by-occasion__header">
-                    <h2 className="shop-by-occasion__title">Shop for Sacred Occasions</h2>
+                    <h2 className="shop-by-occasion__title">
+                        <span className="title-reveal">Shop for Sacred Occasions</span>
+                    </h2>
                     <p className="shop-by-occasion__subtitle">
                         Find the right saree for every meaningful family moment
                     </p>
@@ -66,7 +68,7 @@ const ShopByOccasion = () => {
                             <Link
                                 key={occasion.id}
                                 to={occasion.link}
-                                className="occasion-card"
+                                className="occasion-card stagger-item"
                             >
                                 {/* Image */}
                                 <div className="occasion-card__image-wrapper">

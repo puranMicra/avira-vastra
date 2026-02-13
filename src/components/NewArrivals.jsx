@@ -20,7 +20,9 @@ const NewArrivals = () => {
 
                 {/* Section Header */}
                 <div className="new-arrivals__header">
-                    <h2 className="new-arrivals__title">New Arrivals</h2>
+                    <h2 className="new-arrivals__title">
+                        <span className="title-reveal">New Arrivals</span>
+                    </h2>
                     <p className="new-arrivals__subtitle">
                         Freshly curated sarees from Surat
                     </p>
@@ -51,7 +53,7 @@ const NewArrivals = () => {
                         {products.map((product, index) => (
                             <div
                                 key={product._id}
-                                className="new-arrivals__item"
+                                className="new-arrivals__item stagger-item"
                                 style={{ animationDelay: `${index * 0.1}s` }}
                             >
                                 <ProductCard product={product} />

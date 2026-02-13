@@ -37,7 +37,9 @@ const HeritageWeaves = () => {
 
                 {/* Section Header */}
                 <div className="heritage-weaves__header">
-                    <h2 className="heritage-weaves__title">Our Heritage Weaves</h2>
+                    <h2 className="heritage-weaves__title">
+                        <span className="title-reveal">Our Heritage Weaves</span>
+                    </h2>
                     <p className="heritage-weaves__subtitle">
                         Timeless traditions honoured across generations
                     </p>
@@ -67,7 +69,7 @@ const HeritageWeaves = () => {
                             <Link
                                 key={weave.id}
                                 to={weave.link}
-                                className={`weave-card heritage-weaves__item ${weave.overlayLight ? 'weave-card--light-overlay' : ''}`}
+                                className={`weave-card heritage-weaves__item stagger-item ${weave.overlayLight ? 'weave-card--light-overlay' : ''}`}
                                 style={{ animationDelay: `${index * 0.15}s` }}
                             >
                                 {/* Image */}

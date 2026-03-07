@@ -17,7 +17,7 @@ const AdminOrders = () => {
     const fetchOrders = async () => {
         try {
             const data = await ordersAPI.getAll();
-            setOrders(data);
+            setOrders(data?.orders ?? (Array.isArray(data) ? data : []));
         } catch (err) {
             toast.error('Failed to fetch orders');
         } finally {

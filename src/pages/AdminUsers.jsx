@@ -14,7 +14,7 @@ const AdminUsers = () => {
     const fetchCustomers = async () => {
         try {
             const data = await adminAPI.getCustomers();
-            setCustomers(data);
+            setCustomers(data?.customers ?? (Array.isArray(data) ? data : []));
         } catch (err) {
             toast.error('Failed to fetch customer data');
         } finally {

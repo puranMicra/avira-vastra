@@ -57,7 +57,7 @@ const ProfilePage = () => {
                 // Fetch Orders
                 try {
                     const orderData = await ordersAPI.getMyOrders();
-                    setOrders(orderData);
+                    setOrders(orderData?.orders ?? (Array.isArray(orderData) ? orderData : []));
                 } catch (err) {
                     console.error('Error fetching orders:', err);
                 } finally {

@@ -56,8 +56,8 @@ export const ordersAPI = {
     create: (orderData) => apiClient.post('/orders', orderData),
     getById: (id) => apiClient.get(`/orders/${id}`),
     track: (params) => apiClient.get('/orders/track', { params }),
-    getAll: () => apiClient.get('/orders'),
-    getMyOrders: () => apiClient.get('/orders/my-orders'),
+    getAll: (params = {}) => apiClient.get('/orders', params),
+    getMyOrders: (params = {}) => apiClient.get('/orders/my-orders', params),
     updateStatus: (id, status) => apiClient.put(`/orders/${id}/status`, { status }),
 };
 
@@ -81,7 +81,7 @@ export const contentAPI = {
  */
 export const adminAPI = {
     getStats: () => apiClient.get('/admin/stats'),
-    getCustomers: () => apiClient.get('/admin/customers'),
+    getCustomers: (params = {}) => apiClient.get('/admin/customers', params),
 };
 
 /**

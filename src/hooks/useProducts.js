@@ -28,8 +28,14 @@ export const useProducts = (filters = {}, options = {}) => {
             const mergedFilters = { ...filtersRef.current, ...customFilters };
             const data = await productsAPI.getAll(mergedFilters);
 
-            setProducts(Array.isArray(data) ? data : []);
-            setHasMore(data.length >= (mergedFilters.limit || 20));
+            // Backend returns { products: [...], pagination: {...} }
+            // Fall back gracefully if response is a plain array (backwards compat)
+            const list = data?.products ?? (Array.isArray(data) ? data : []);
+            const limit = mergedFilters.limit || 20;
+
+            setProducts(list);
+            setHasMore(list.length >= limit);
+
         } catch (err) {
             setError(err.message || 'Failed to fetch products');
             setProducts([]);
